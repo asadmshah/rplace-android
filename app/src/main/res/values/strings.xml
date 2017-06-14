@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">R/Place</string>
+    <string name="an_error_occurred">An Error Occurred.</string>
 </resources>
