@@ -19,6 +19,9 @@ class MainActivity: AppCompatActivity(), MainContract.View {
         setContentView(R.layout.activity_main)
 
         viewPlace = findViewById(R.id.place) as PlaceView
+        viewPlace.onPointClickListener = { x: Int, y: Int ->
+            presenter.onPixelTouched(x, y)
+        }
 
         presenter = MainPresenter(this, BaseApplication.injector(this))
         presenter.onCreate(savedInstanceState)
