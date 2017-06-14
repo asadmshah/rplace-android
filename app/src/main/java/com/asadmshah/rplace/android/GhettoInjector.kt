@@ -6,7 +6,7 @@ import com.asadmshah.rplace.android.schedulers.Schedulers
 import com.asadmshah.rplace.android.storage.Storage
 import com.asadmshah.rplace.client.PlaceClientFactory
 
-internal class InjectorImpl(private val application: BaseApplication): Injector {
+internal class GhettoInjector(private val application: BaseApplication): Injector {
 
     private val schedulers_ by lazy { Schedulers.create() }
     private val storage_ by lazy { Storage.create(application, schedulers_.io()) }
@@ -15,7 +15,8 @@ internal class InjectorImpl(private val application: BaseApplication): Injector 
         PlaceClientFactory.create(BuildConfig.SERVER_HOST, BuildConfig.SERVER_PORT)
     }
     private val endpointsClient_ by lazy {
-        EndpointsClient.create(placesClient_, preferences_, storage_, schedulers_.io())
+//        EndpointsClient.create(placesClient_, preferences_, storage_, schedulers_.io())
+        EndpointsClient.create(application, schedulers_.io())
     }
 
     override fun schedulers(): Schedulers = schedulers_

@@ -83,6 +83,8 @@ class MainPresenter(private val view: MainContract.View, injector: Injector) : M
     }
 
     fun onClientError(throwable: Throwable) {
+        throwable.printStackTrace()
+
         view.showError(R.string.an_error_occurred)
     }
 }
