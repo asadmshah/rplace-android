@@ -2,6 +2,7 @@ package com.asadmshah.rplace.android.screens.main
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import com.asadmshah.rplace.android.Injector
 import com.asadmshah.rplace.android.R
 import com.asadmshah.rplace.android.client.EndpointEvents
@@ -68,15 +69,19 @@ class MainPresenter(private val view: MainContract.View, injector: Injector) : M
     fun onClientEvent(event: EndpointEvents) {
         when (event) {
             is EndpointEvents.OnInitial -> {
+                Log.d("MainPresenter", "onInitial")
                 event.bitmap?.let { view.setBitmap(it) }
             }
             is EndpointEvents.OnOpened -> {
+                Log.d("MainPresenter", "onOpened")
                 socket = event.webSocket
             }
             is EndpointEvents.OnDrawEvent -> {
+                Log.d("MainPresenter", "onDrawEvent")
                 view.setPixels(event.batch.eventsList)
             }
             is EndpointEvents.OnClosed -> {
+                Log.d("MainPresenter", "onClosed")
                 socket = null
             }
         }

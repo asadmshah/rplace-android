@@ -1,5 +1,6 @@
 package com.asadmshah.rplace.android.client
 
+import android.util.Log
 import com.asadmshah.rplace.android.preferences.Preferences
 import com.asadmshah.rplace.android.storage.Storage
 import com.asadmshah.rplace.client.DrawingSocketEvents
@@ -15,7 +16,19 @@ internal class EndpointsClientImpl(private val placeClient: PlaceClient,
 
     override fun connect(): Observable<EndpointEvents> {
         return Observable
-                .defer { placeClient.stream(preferences.getOffset()) }
+                .defer {
+                    placeClient.stream(preferences.getOffset()).doOnNext {
+                        Log.d("EndpointsClient", it.javaClass.name)
+                    }
+                }
+                .onErrorResumeNext({ t: Throwable ->
+                    t.printStackTrace()
+                    if (t is IllegalArgumentException) {
+                        Observable.empty()
+                    } else {
+                        Observable.error(t)
+                    }
+                })
                 .map {
                     when (it) {
                         is DrawingSocketEvents.OnOpened -> EndpointEvents.OnOpened(it.webSocket)

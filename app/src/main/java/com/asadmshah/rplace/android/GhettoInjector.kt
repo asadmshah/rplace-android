@@ -15,8 +15,8 @@ internal class GhettoInjector(private val application: BaseApplication): Injecto
         PlaceClientFactory.create(BuildConfig.SERVER_HOST, BuildConfig.SERVER_PORT)
     }
     private val endpointsClient_ by lazy {
-//        EndpointsClient.create(placesClient_, preferences_, storage_, schedulers_.io())
-        EndpointsClient.create(application, schedulers_.io())
+        EndpointsClient.create(placesClient_, preferences_, storage_, schedulers_.io())
+//        EndpointsClient.create(application, schedulers_.io())
     }
 
     override fun schedulers(): Schedulers = schedulers_
